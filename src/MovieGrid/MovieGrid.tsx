@@ -14,7 +14,7 @@ export default function MovieGrid({ onSelect, movies } : MovieGridProps) {
             {movies.map((movie) => (
                 <li key={movie.id}>
                     <div className={css.card}
-                    onClick = {() => onSelect}>
+                    onClick = {() => onSelect(movie)}>
                     <img
                         className={css.image}
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

@@ -2,26 +2,30 @@ import axios from "axios";
 import { type Movie } from "../types/movie"
 
 
-export interface ArticlesHttpResponse {
-  results: Movie[];
+export interface MoviesHttpResponse {
+  results: Movie[],
+  page: number, 
+  total_pages: number
 }
 
 const myKey = import.meta.env.VITE_API_KEY;
 
+if (!myKey) {
+  throw new Error("VITE_API_KEY is not defined in the environment variables.");
+}
+
 const url = 'https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1';
 
-export async function fetchMovies(query: string): Promise<ArticlesHttpResponse>{
-    const { data } = await axios.get<ArticlesHttpResponse>(url, {
+export async function fetchMovies(query: string): Promise<MoviesHttpResponse>{
+    const { data } = await axios.get<MoviesHttpResponse>(url, {
     params: {
-        method: 'GET',
         query: query
     },
     headers: {
         Authorization: `Bearer ${myKey}`,
-        accept: 'application/json'
+        Accept: 'application/json'
   }
     }) 
     
     return data
 }
-
